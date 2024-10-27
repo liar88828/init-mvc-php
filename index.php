@@ -1,25 +1,18 @@
 <?php
-// index.php - Front Controller
-//require_once 'config/config.php';
-require_once 'config/route.php';
-//require_once 'core/Controller.php';
-//require_once 'core/Database.php';
-
-
-
-// Start session
 session_start();
-
-// Instantiate Router
-$router = new Router();
+define('BASE_PATH', __DIR__);
+require_once 'Core/Application.php';
+$app = new Application();
+$router = $app->getRouter();
 
 // Define routes
-$router->addRoute('GET', '/', 'HomeController@index');
-$router->addRoute('GET', '/about', 'HomeController@about');
-$router->addRoute('GET', '/users', 'UserController@index');
-$router->addRoute('GET', '/users/create', 'UserController@create');
-$router->addRoute('POST', '/users/store', 'UserController@store');
+$router->get('/', [UserController::class, 'index']);
+$router->get('/test', [UserController::class, 'test']);
+$router->get('/create', [UserController::class, 'create']);
+$router->post('/create', [UserController::class, 'create']);
+$router->get('/update/{id}', [UserController::class, 'update']);
+$router->post('/update/{id}', [UserController::class, 'update']);
+$router->post('/{id}', [UserController::class, 'delete']);
+$router->get('/{id}', [UserController::class, 'detail']);
 
-// Dispatch the route
-$router->dispatch();
-
+$app->run();

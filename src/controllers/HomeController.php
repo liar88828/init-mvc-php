@@ -1,5 +1,6 @@
 <?php
-require 'config/controller.php';
+
+
 
 // controllers/HomeController.php
 class HomeController extends Controller
